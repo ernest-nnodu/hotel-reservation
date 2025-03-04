@@ -1,6 +1,6 @@
 package model;
 
-import java.util.regex.Matcher;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Customer {
@@ -38,5 +38,26 @@ public class Customer {
         return "First Name: " + firstName + " " +
                 "Last Name: " + lastName + " " +
                 "Email address: " + email;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Customer customer = (Customer) obj;
+        return Objects.equals(firstName, customer.firstName) &&
+                Objects.equals(lastName, customer.lastName) &&
+                Objects.equals(email, customer.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, email);
     }
 }
