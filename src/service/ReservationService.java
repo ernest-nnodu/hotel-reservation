@@ -73,7 +73,7 @@ public class ReservationService {
         return reservationToSave;
     }
 
-    public List<Reservation> getCustomersReservation(Customer customer) {
+    public List<Reservation> getCustomerReservations(Customer customer) {
         List<Reservation> customersReservation = new ArrayList<>();
 
         for (Reservation reservation : reservations) {
