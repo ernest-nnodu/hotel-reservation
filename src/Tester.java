@@ -1,9 +1,10 @@
 import model.Customer;
+import ui.MainMenu;
 
 public class Tester {
 
     public static void main(String[] args) {
-        Customer customer = new Customer("first", "second", "joe@example.net");
-        System.out.println(customer);
+        MainMenu menu = MainMenu.getInstance();
+        menu.start();
     }
 }
