@@ -39,6 +39,10 @@ public class ReservationService {
         return null;
     }
 
+    public List<IRoom> getAllRooms() {
+        return rooms;
+    }
+
     public List<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
         List<IRoom> bookedRooms = new ArrayList<>();
         List<IRoom> unbookedRooms = new ArrayList<>();
