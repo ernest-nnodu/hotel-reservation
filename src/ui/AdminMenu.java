@@ -6,6 +6,7 @@ import model.Room;
 import model.RoomType;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class AdminMenu {
@@ -41,6 +42,7 @@ public class AdminMenu {
                 case "1":
                     break;
                 case "2":
+                    processSeeAllRoomRequest();
                     break;
                 case "3":
                     break;
@@ -54,6 +56,18 @@ public class AdminMenu {
                     System.out.println("Error: invalid menu option provided");
             }
         } while (running);
+    }
+
+    private void processSeeAllRoomRequest() {
+        List<IRoom> rooms = adminResource.getAllRooms();
+
+        if (rooms.isEmpty()) {
+            System.out.println("No rooms available");
+            return;
+        }
+        for (IRoom room : rooms) {
+            System.out.println(room);
+        }
     }
 
     private void processAddRoomRequest() {
