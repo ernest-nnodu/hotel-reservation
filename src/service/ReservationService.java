@@ -27,7 +27,20 @@ public class ReservationService {
     }
 
     public void addRoom(IRoom room) {
+        if (roomNumberExists(room.getRoomNumber())) {
+            throw new IllegalArgumentException("Room number already exist!");
+        }
         rooms.add(room);
+    }
+
+    private boolean roomNumberExists(String roomNumber) {
+
+        for (IRoom room : rooms) {
+            if (room.getRoomNumber().equals(roomNumber)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public IRoom getRoom(String roomNumber) {

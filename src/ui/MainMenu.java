@@ -25,6 +25,7 @@ public class MainMenu {
     }
 
     public void start() {
+        displayGreetingMessage();
         runMainMenu();
     }
 
@@ -52,6 +53,15 @@ public class MainMenu {
                     System.out.println("Error: invalid menu option provided");
             }
         } while (running);
+    }
+
+    private void displayGreetingMessage() {
+        String message = "WELCOME TO HOTEL RESERVATION APPLICATION";
+
+        printLineSeperator();
+        System.out.println(message);
+        printLineSeperator();
+
     }
 
     private void displayMainMenu() {
