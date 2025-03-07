@@ -1,6 +1,7 @@
 package ui;
 
 import api.AdminResource;
+import model.Customer;
 import model.IRoom;
 import model.Room;
 import model.RoomType;
@@ -40,6 +41,7 @@ public class AdminMenu {
 
             switch (userInput) {
                 case "1":
+                    processSeeAllCustomerRequest();
                     break;
                 case "2":
                     processSeeAllRoomRequest();
@@ -56,6 +58,19 @@ public class AdminMenu {
                     System.out.println("Error: invalid menu option provided");
             }
         } while (running);
+    }
+
+    private void processSeeAllCustomerRequest() {
+        List<Customer> customers = adminResource.getAllCustomers();
+
+        if (customers.isEmpty()) {
+            System.out.println("No customer available");
+            return;
+        }
+
+        for (Customer customer : customers) {
+            System.out.println(customer);
+        }
     }
 
     private void processSeeAllRoomRequest() {
@@ -142,13 +157,13 @@ public class AdminMenu {
                 2. See all Rooms
                 3. See all Reservations
                 4. Add a Room
-                5. Back to Main Menu
-                """;
+                5. Back to Main Menu""";
         displayLineSeperator();
         System.out.println("Admin Menu");
         displayLineSeperator();
         System.out.println(menu);
         displayLineSeperator();
+        System.out.println("Enter a menu option number:");
     }
 
     private void displayLineSeperator() {

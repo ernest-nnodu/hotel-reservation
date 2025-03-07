@@ -134,6 +134,7 @@ public class MainMenu {
                 5. Exit""";
         System.out.println(menu);
         printLineSeperator();
+        System.out.println("Enter menu option number:");
     }
 
     private void printLineSeperator() {
