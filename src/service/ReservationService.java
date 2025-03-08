@@ -11,8 +11,8 @@ import java.util.List;
 public class ReservationService {
 
     private static ReservationService instance;
-    private List<Reservation> reservations;
-    private List<IRoom> rooms;
+    private final List<Reservation> reservations;
+    private final List<IRoom> rooms;
 
     private ReservationService() {
         rooms = new ArrayList<>();
@@ -58,33 +58,44 @@ public class ReservationService {
 
     public List<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
         List<IRoom> bookedRooms = new ArrayList<>();
-        List<IRoom> unbookedRooms = new ArrayList<>();
+        List<IRoom> availableRooms = new ArrayList<>();
 
+        //Find rooms which are booked within the given dates
         for (Reservation reservation : reservations) {
-
-            //Find rooms which are booked within the given dates
-            if (reservation.getCheckInDate().equals(checkInDate) &&
-            reservation.getCheckOutDate().equals(checkInDate)) {
-                bookedRooms.add(reservation.getRoom());
-                continue;
-            }
-            if (reservation.getCheckInDate().after(checkInDate) &&
-            reservation.getCheckOutDate().before(checkOutDate)) {
+            if (!((checkOutDate.before(reservation.getCheckInDate())) ||
+                    (checkInDate.after(reservation.getCheckOutDate())))) {
                 bookedRooms.add(reservation.getRoom());
             }
         }
 
-        //Filter unbooked rooms using list of booked rooms
+        //Filter available rooms from listed of booked rooms
         for (IRoom room : rooms) {
             if (!bookedRooms.contains(room)) {
-                unbookedRooms.add(room);
+                availableRooms.add(room);
             }
         }
-        return unbookedRooms;
+        return availableRooms;
     }
 
     public Reservation reserveRoom(Customer customer, IRoom room,
                                    Date checkInDate, Date checkOutDate) {
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer does not exist!");
+        }
+
+        if (checkOutDate.before(checkInDate)) {
+            throw new IllegalArgumentException("Checkout date should be after Checkin date!");
+        }
+
+        if (room == null) {
+            throw new IllegalArgumentException("Room number do not exist!");
+        }
+
+        List<IRoom> availableRooms = findRooms(checkInDate, checkOutDate);
+        if (!availableRooms.contains(room)) {
+            throw new IllegalArgumentException("Room not available!");
+        }
+
         Reservation reservationToSave = new Reservation(customer, room, checkInDate, checkOutDate);
         reservations.add(reservationToSave);
         return reservationToSave;
