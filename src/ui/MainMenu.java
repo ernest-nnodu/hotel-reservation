@@ -147,8 +147,9 @@ public class MainMenu {
     }
 
     private Date createDate(String date) {
+        //Date formatting to ensure date format pattern is entered by user (www.google.com)
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        dateFormat.setLenient(false);  // Ensure strict validation
+        dateFormat.setLenient(false);
         try {
            return dateFormat.parse(date);
         } catch (ParseException e) {
