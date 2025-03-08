@@ -3,6 +3,7 @@ package ui;
 import api.HotelResource;
 import model.Customer;
 import model.IRoom;
+import model.Reservation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,6 +48,7 @@ public class MainMenu {
                     processFindAndReserveRoomRequest();
                     break;
                 case "2":
+                    processSeeMyReservationRequest();
                     break;
                 case "3":
                     processCreateAccountRequest();
@@ -151,6 +153,22 @@ public class MainMenu {
            return dateFormat.parse(date);
         } catch (ParseException e) {
             return null;
+        }
+    }
+
+    private void processSeeMyReservationRequest() {
+        System.out.println("Enter Email format: name@domain.com");
+        String email = scanner.nextLine().trim();
+        List<Reservation> reservations = hotelResource.getCustomerReservations(email);
+
+        if (reservations.isEmpty()) {
+            System.out.println("Sorry there are no reservations for the customer provided!");
+            return;
+        }
+
+        for (Reservation reservation : reservations) {
+            System.out.println(reservation);
+            System.out.println();
         }
     }
 
