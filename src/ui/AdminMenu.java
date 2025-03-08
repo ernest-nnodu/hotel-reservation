@@ -1,10 +1,7 @@
 package ui;
 
 import api.AdminResource;
-import model.Customer;
-import model.IRoom;
-import model.Room;
-import model.RoomType;
+import model.*;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -47,6 +44,7 @@ public class AdminMenu {
                     processSeeAllRoomRequest();
                     break;
                 case "3":
+                    processSeeAllReservationRequest();
                     break;
                 case "4":
                     processAddRoomRequest();
@@ -83,6 +81,10 @@ public class AdminMenu {
         for (IRoom room : rooms) {
             System.out.println(room);
         }
+    }
+
+    private void processSeeAllReservationRequest() {
+        adminResource.displayAllReservation();
     }
 
     private void processAddRoomRequest() {

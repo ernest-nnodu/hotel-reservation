@@ -113,6 +113,10 @@ public class ReservationService {
     }
 
     public void printAllReservation() {
+        if (reservations.isEmpty()) {
+            System.out.println("No reservations made!");
+        }
+
         for (Reservation reservation : reservations) {
             System.out.println(reservation);
         }
