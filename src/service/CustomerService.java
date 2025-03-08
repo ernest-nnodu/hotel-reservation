@@ -22,8 +22,21 @@ public class CustomerService {
     }
 
     public void addCustomer(String email, String firstName, String lastName) {
+        if (customerEmailExists(email)) {
+            throw new IllegalArgumentException("Customer with email " + email + " already exists!");
+        }
+
         Customer customerToSave = new Customer(firstName, lastName, email);
         customers.add(customerToSave);
+    }
+
+    private boolean customerEmailExists(String email) {
+        for (Customer customer : customers) {
+            if (customer.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Customer getCustomer(String email) {

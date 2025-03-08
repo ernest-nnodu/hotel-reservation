@@ -50,6 +50,9 @@ public class AdminMenu {
                     processAddRoomRequest();
                     break;
                 case "5":
+                    addTestData();
+                    break;
+                case "6":
                     running = false;
                     break;
                 default:
@@ -153,13 +156,18 @@ public class AdminMenu {
         return roomNumber;
     }
 
+    private void addTestData() {
+        adminResource.loadTestData();
+    }
+
     private void displayAdminMenu() {
         String menu = """
                 1. See all Customers
                 2. See all Rooms
                 3. See all Reservations
                 4. Add a Room
-                5. Back to Main Menu""";
+                5. Add test data
+                6. Back to Main Menu""";
         displayLineSeperator();
         System.out.println("Admin Menu");
         displayLineSeperator();
