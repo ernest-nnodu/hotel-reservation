@@ -12,8 +12,8 @@ import java.util.List;
 public class AdminResource {
 
     private static AdminResource instance;
-    private CustomerService customerService;
-    private ReservationService reservationService;
+    private final CustomerService customerService;
+    private final ReservationService reservationService;
 
     private AdminResource() {
         customerService = CustomerService.getInstance();

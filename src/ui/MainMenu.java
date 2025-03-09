@@ -15,8 +15,8 @@ import java.util.Scanner;
 public class MainMenu {
 
     private static MainMenu instance;
-    private HotelResource hotelResource;
-    private AdminMenu adminMenu;
+    private final HotelResource hotelResource;
+    private final AdminMenu adminMenu;
     private final Scanner scanner;
 
     private MainMenu() {
@@ -74,15 +74,9 @@ public class MainMenu {
 
         if (availableRooms.isEmpty()) {
             System.out.println("Sorry no available room within the specified dates");
-            //availableRooms = recommendedRooms(checkInDate, checkOutDate);
-        }
-
-        /*if (availableRooms.isEmpty()) {
+            recommendedRooms(checkInDate, checkOutDate);
             return;
-        } else {
-            System.out.println("These are some rooms we recommend, and are available a week later" +
-                    " from your checkin and checkout dates");
-        }*/
+        }
 
         for (IRoom room : availableRooms) {
             System.out.println(room);
@@ -91,7 +85,7 @@ public class MainMenu {
         processRoomBooking(checkInDate, checkOutDate);
     }
 
-    private List<IRoom> recommendedRooms(Date checkInDate, Date checkOutDate) {
+    private void recommendedRooms(Date checkInDate, Date checkOutDate) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(checkInDate);
         calendar.add(Calendar.DAY_OF_MONTH, 7);
@@ -101,7 +95,20 @@ public class MainMenu {
         calendar.add(Calendar.DAY_OF_MONTH, 7);
         Date futureCheckoutDate = calendar.getTime();
 
-        return hotelResource.findRoom(futureCheckinDate, futureCheckoutDate);
+        List<IRoom> recommendedRooms = hotelResource.findRoom(futureCheckinDate, futureCheckoutDate);
+
+        if (recommendedRooms.isEmpty()) {
+            return;
+        }
+
+        System.out.println("These are rooms we recommend, and are available a week later" +
+                " from your checkin and checkout dates");
+
+        for (IRoom room : recommendedRooms) {
+            System.out.println(room);
+        }
+
+        processRoomBooking(futureCheckinDate, futureCheckoutDate);
     }
 
     private void processRoomBooking(Date checkInDate, Date checkOutDate) {
