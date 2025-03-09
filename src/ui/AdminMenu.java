@@ -134,6 +134,11 @@ public class AdminMenu {
                 System.out.println("Please enter a numerical value");
                 continue;
             }
+
+            if (price < 0) {
+                System.out.println("Negative number not allowed!");
+                continue;
+            }
             validPrice = true;
         }
         return price;
