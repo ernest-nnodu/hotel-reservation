@@ -7,6 +7,7 @@ import model.Reservation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -73,14 +74,34 @@ public class MainMenu {
 
         if (availableRooms.isEmpty()) {
             System.out.println("Sorry no available room within the specified dates");
-            return;
+            //availableRooms = recommendedRooms(checkInDate, checkOutDate);
         }
+
+        /*if (availableRooms.isEmpty()) {
+            return;
+        } else {
+            System.out.println("These are some rooms we recommend, and are available a week later" +
+                    " from your checkin and checkout dates");
+        }*/
 
         for (IRoom room : availableRooms) {
             System.out.println(room);
         }
 
         processRoomBooking(checkInDate, checkOutDate);
+    }
+
+    private List<IRoom> recommendedRooms(Date checkInDate, Date checkOutDate) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(checkInDate);
+        calendar.add(Calendar.DAY_OF_MONTH, 7);
+        Date futureCheckinDate = calendar.getTime();
+
+        calendar.setTime(checkOutDate);
+        calendar.add(Calendar.DAY_OF_MONTH, 7);
+        Date futureCheckoutDate = calendar.getTime();
+
+        return hotelResource.findRoom(futureCheckinDate, futureCheckoutDate);
     }
 
     private void processRoomBooking(Date checkInDate, Date checkOutDate) {
@@ -141,6 +162,13 @@ public class MainMenu {
                 System.out.println("Wrong date format!");
                 continue;
             }
+
+            Date currentDate = new Date();
+            if (date.before(currentDate)) {
+                System.out.println("Past dates not allowed!");
+                continue;
+            }
+
             validDate = true;
         }
         return date;

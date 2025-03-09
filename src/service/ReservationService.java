@@ -83,12 +83,12 @@ public class ReservationService {
             throw new IllegalArgumentException("Customer does not exist!");
         }
 
-        if (checkOutDate.before(checkInDate)) {
-            throw new IllegalArgumentException("Checkout date should be after Checkin date!");
-        }
-
         if (room == null) {
             throw new IllegalArgumentException("Room number do not exist!");
+        }
+
+        if (checkOutDate.before(checkInDate)) {
+            throw new IllegalArgumentException("Checkout date should be after Checkin date!");
         }
 
         List<IRoom> availableRooms = findRooms(checkInDate, checkOutDate);
